@@ -64,24 +64,24 @@ for i = 1:label_num_right
     greenIdx = idx{i}+num_row*num_col;
     blueIdx = idx{i}+2*num_row*num_col;
     simple_image(redIdx) = mean(im_right(redIdx));
-    simple_image(greenIdx) = mean(im_right(greenIdx));
-    simple_image(blueIdx) = mean(im_right(blueIdx));
+    simple_image(greenIdx) = mean(im_left(greenIdx));
+    simple_image(blueIdx) = mean(im_left(blueIdx));
 end
 imshow(simple_image,'InitialMagnification',67)
 
 figure(7);
 subplot(1, 2, 1);
-imshow(im_right);
-hold on
-plot(centroids_right(:,1),centroids_right(:,2), 'r*');
-plot(valid_set_right(:,1),valid_set_right(:,2), 'b*');
-hold off
-subplot(1, 2, 2);
 imshow(im_left);
 hold on
-plot(centroids_est_right(:,1),centroids_est_right(:,2), 'r*');
-plot(valid_set_right(:,3),valid_set_right(:,4), 'b*');
+plot(centroids_left(:,1),centroids_left(:,2), 'r*');
+plot(valid_set_left(:,1),valid_set_left(:,2), 'b*');
+hold off
+subplot(1, 2, 2);
+imshow(im_right);
+hold on
+plot(centroids_est_left(:,1),centroids_est_left(:,2), 'r*');
+plot(valid_set_left(:,3),valid_set_left(:,4), 'b*');
 hold off
 
 figure(8);
-imshow(disp_map_right/255);
+imshow(disp_map_left/255);
