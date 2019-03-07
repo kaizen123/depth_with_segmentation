@@ -2,12 +2,42 @@ clear;
 clc;
 close all;
 
-dir_name = '..\data\Bicycle1-perfect\';
-%im_left = imresize(imread([dir_name '218708.JPG']), 0.25);
-%im_right = imresize(imread([dir_name '184010.JPG']), 0.25);
-im_left = imresize(imread([dir_name 'im0.png']), 0.25);
-im_right = imresize(imread([dir_name 'im1.png']), 0.25);
+dir_name = '..\data\room4\';
+sp_left = imread([dir_name 'left.jpg']);
+sp_right = imread([dir_name 'right.jpg']);
+cube_left = equi2cubic(sp_left, 1500);
+cube_right = equi2cubic(sp_right, 1500);
+im_left = cube_left{1};
+im_right = cube_right{1};
+%im_left = imresize(imread([dir_name 'im0.png']), 0.25);
+%im_right = imresize(imread([dir_name 'im1.png']), 0.25);
 
+%{
+names = {'Front Face', 'Right Face', 'Back Face', 'Left Face', ...
+    'Top Face', 'Bottom Face'};
+figure(1);
+for idx = 1 : numel(names)
+    % Show image in figure and name the face
+    subplot(2,3,idx);
+    imshow(cube_left{idx});
+    title(names{idx});
+end
+figure(2);
+for idx = 1 : numel(names)
+    % Show image in figure and name the face
+    subplot(2,3,idx);
+    imshow(cube_right{idx});
+    title(names{idx});
+end
+
+disparityRange = [-6 10];
+disparityMap = disparity(rgb2gray(im_left),rgb2gray(im_right),'BlockSize',...
+    15,'DisparityRange',disparityRange);
+imshow(disparityMap,disparityRange);
+title('Disparity Map');
+colormap(gca,jet) 
+colorbar
+%}
 [disp_map_left, label_left, label_num_left, centroids_left, centroids_est_left, valid_set_left] ...
 = superpixel_disparity_left(im_left, im_right);
 
