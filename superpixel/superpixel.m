@@ -2,13 +2,14 @@ clear;
 clc;
 close all;
 
-dir_name = '..\data\room4\';
+dir_name = '..\data\room2\';
 sp_left = imread([dir_name 'left.jpg']);
 sp_right = imread([dir_name 'right.jpg']);
-cube_left = equi2cubic(sp_left, 1500);
-cube_right = equi2cubic(sp_right, 1500);
+cube_left = equi2cubic(sp_left, 1000);
+cube_right = equi2cubic(sp_right, 1000);
 im_left = cube_left{1};
 im_right = cube_right{1};
+[im_left, im_right] = rectify_stereo(im_left, im_right);
 %im_left = imresize(imread([dir_name 'im0.png']), 0.25);
 %im_right = imresize(imread([dir_name 'im1.png']), 0.25);
 
